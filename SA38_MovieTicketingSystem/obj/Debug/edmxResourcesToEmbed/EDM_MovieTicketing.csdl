@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SA38_MovieTicketingDBModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="SA38_MovieTicketingDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Bookings" EntityType="SA38_MovieTicketingDBModel.Booking" />
+    <EntitySet Name="Members" EntityType="SA38_MovieTicketingDBModel.Member" />
+    <EntitySet Name="Movies" EntityType="SA38_MovieTicketingDBModel.Movie" />
+    <EntitySet Name="MovieSchedules" EntityType="SA38_MovieTicketingDBModel.MovieSchedule" />
+    <EntitySet Name="Promotions" EntityType="SA38_MovieTicketingDBModel.Promotion" />
+    <EntitySet Name="Restaurants" EntityType="SA38_MovieTicketingDBModel.Restaurant" />
+    <EntitySet Name="SeatAvailabilities" EntityType="SA38_MovieTicketingDBModel.SeatAvailability" />
+    <EntitySet Name="Theatres" EntityType="SA38_MovieTicketingDBModel.Theatre" />
+    <EntitySet Name="Timings" EntityType="SA38_MovieTicketingDBModel.Timing" />
+    <AssociationSet Name="FK_Booking_Member" Association="SA38_MovieTicketingDBModel.FK_Booking_Member">
+      <End Role="Member" EntitySet="Members" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Booking_MovieSchedule" Association="SA38_MovieTicketingDBModel.FK_Booking_MovieSchedule">
+      <End Role="MovieSchedule" EntitySet="MovieSchedules" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SeatAvailability_Booking" Association="SA38_MovieTicketingDBModel.FK_SeatAvailability_Booking">
+      <End Role="Booking" EntitySet="Bookings" />
+      <End Role="SeatAvailability" EntitySet="SeatAvailabilities" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MovieSchedule_Movie" Association="SA38_MovieTicketingDBModel.FK_MovieSchedule_Movie">
+      <End Role="Movie" EntitySet="Movies" />
+      <End Role="MovieSchedule" EntitySet="MovieSchedules" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MovieSchedule_Theatre" Association="SA38_MovieTicketingDBModel.FK_MovieSchedule_Theatre">
+      <End Role="Theatre" EntitySet="Theatres" />
+      <End Role="MovieSchedule" EntitySet="MovieSchedules" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MovieSchedule_Timing" Association="SA38_MovieTicketingDBModel.FK_MovieSchedule_Timing">
+      <End Role="Timing" EntitySet="Timings" />
+      <End Role="MovieSchedule" EntitySet="MovieSchedules" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Promotion_MovieSchedule" Association="SA38_MovieTicketingDBModel.FK_Promotion_MovieSchedule">
+      <End Role="MovieSchedule" EntitySet="MovieSchedules" />
+      <End Role="Promotion" EntitySet="Promotions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SeatAvailability_MovieSchedule" Association="SA38_MovieTicketingDBModel.FK_SeatAvailability_MovieSchedule">
+      <End Role="MovieSchedule" EntitySet="MovieSchedules" />
+      <End Role="SeatAvailability" EntitySet="SeatAvailabilities" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Promotion_Restaurant" Association="SA38_MovieTicketingDBModel.FK_Promotion_Restaurant">
+      <End Role="Restaurant" EntitySet="Restaurants" />
+      <End Role="Promotion" EntitySet="Promotions" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Booking">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="ScheduleId" Type="Int32" />
+    <Property Name="Status" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="MemberId" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Member" Relationship="SA38_MovieTicketingDBModel.FK_Booking_Member" FromRole="Booking" ToRole="Member" />
+    <NavigationProperty Name="MovieSchedule" Relationship="SA38_MovieTicketingDBModel.FK_Booking_MovieSchedule" FromRole="Booking" ToRole="MovieSchedule" />
+    <NavigationProperty Name="SeatAvailabilities" Relationship="SA38_MovieTicketingDBModel.FK_SeatAvailability_Booking" FromRole="Booking" ToRole="SeatAvailability" />
+  </EntityType>
+  <EntityType Name="Member">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Address" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="NRIC" Type="String" MaxLength="25" Unicode="true" FixedLength="false" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="DOB" Type="DateTime" />
+    <Property Name="Email" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Bookings" Relationship="SA38_MovieTicketingDBModel.FK_Booking_Member" FromRole="Member" ToRole="Booking" />
+  </EntityType>
+  <EntityType Name="Movie">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Rating" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="ContentURL" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="Duration" Type="Int32" />
+    <Property Name="Price" Type="Double" />
+    <NavigationProperty Name="MovieSchedules" Relationship="SA38_MovieTicketingDBModel.FK_MovieSchedule_Movie" FromRole="Movie" ToRole="MovieSchedule" />
+  </EntityType>
+  <EntityType Name="MovieSchedule">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MovieId" Type="Int32" />
+    <Property Name="TheatreId" Type="Int32" />
+    <Property Name="TimingId" Type="Int32" />
+    <Property Name="ScheduleDate" Type="DateTime" />
+    <NavigationProperty Name="Bookings" Relationship="SA38_MovieTicketingDBModel.FK_Booking_MovieSchedule" FromRole="MovieSchedule" ToRole="Booking" />
+    <NavigationProperty Name="Movie" Relationship="SA38_MovieTicketingDBModel.FK_MovieSchedule_Movie" FromRole="MovieSchedule" ToRole="Movie" />
+    <NavigationProperty Name="Theatre" Relationship="SA38_MovieTicketingDBModel.FK_MovieSchedule_Theatre" FromRole="MovieSchedule" ToRole="Theatre" />
+    <NavigationProperty Name="Timing" Relationship="SA38_MovieTicketingDBModel.FK_MovieSchedule_Timing" FromRole="MovieSchedule" ToRole="Timing" />
+    <NavigationProperty Name="Promotions" Relationship="SA38_MovieTicketingDBModel.FK_Promotion_MovieSchedule" FromRole="MovieSchedule" ToRole="Promotion" />
+    <NavigationProperty Name="SeatAvailabilities" Relationship="SA38_MovieTicketingDBModel.FK_SeatAvailability_MovieSchedule" FromRole="MovieSchedule" ToRole="SeatAvailability" />
+  </EntityType>
+  <EntityType Name="Promotion">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ScheduleId" Type="Int32" />
+    <Property Name="RestaurantId" Type="Int32" />
+    <Property Name="Description" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+    <Property Name="ContentURL" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="MovieSchedule" Relationship="SA38_MovieTicketingDBModel.FK_Promotion_MovieSchedule" FromRole="Promotion" ToRole="MovieSchedule" />
+    <NavigationProperty Name="Restaurant" Relationship="SA38_MovieTicketingDBModel.FK_Promotion_Restaurant" FromRole="Promotion" ToRole="Restaurant" />
+  </EntityType>
+  <EntityType Name="Restaurant">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Location" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="URL" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Promotions" Relationship="SA38_MovieTicketingDBModel.FK_Promotion_Restaurant" FromRole="Restaurant" ToRole="Promotion" />
+  </EntityType>
+  <EntityType Name="SeatAvailability">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ScheduleId" Type="Int32" />
+    <Property Name="SeatNumber" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="BookingId" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Booking" Relationship="SA38_MovieTicketingDBModel.FK_SeatAvailability_Booking" FromRole="SeatAvailability" ToRole="Booking" />
+    <NavigationProperty Name="MovieSchedule" Relationship="SA38_MovieTicketingDBModel.FK_SeatAvailability_MovieSchedule" FromRole="SeatAvailability" ToRole="MovieSchedule" />
+  </EntityType>
+  <EntityType Name="Theatre">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Location" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="MovieSchedules" Relationship="SA38_MovieTicketingDBModel.FK_MovieSchedule_Theatre" FromRole="Theatre" ToRole="MovieSchedule" />
+  </EntityType>
+  <EntityType Name="Timing">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StartTime" Type="DateTime" />
+    <Property Name="EndTime" Type="DateTime" />
+    <NavigationProperty Name="MovieSchedules" Relationship="SA38_MovieTicketingDBModel.FK_MovieSchedule_Timing" FromRole="Timing" ToRole="MovieSchedule" />
+  </EntityType>
+  <Association Name="FK_Booking_Member">
+    <End Role="Member" Type="SA38_MovieTicketingDBModel.Member" Multiplicity="0..1" />
+    <End Role="Booking" Type="SA38_MovieTicketingDBModel.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Member">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="MemberId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Booking_MovieSchedule">
+    <End Role="MovieSchedule" Type="SA38_MovieTicketingDBModel.MovieSchedule" Multiplicity="0..1" />
+    <End Role="Booking" Type="SA38_MovieTicketingDBModel.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MovieSchedule">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="ScheduleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SeatAvailability_Booking">
+    <End Role="Booking" Type="SA38_MovieTicketingDBModel.Booking" Multiplicity="0..1" />
+    <End Role="SeatAvailability" Type="SA38_MovieTicketingDBModel.SeatAvailability" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Booking">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SeatAvailability">
+        <PropertyRef Name="BookingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MovieSchedule_Movie">
+    <End Role="Movie" Type="SA38_MovieTicketingDBModel.Movie" Multiplicity="0..1" />
+    <End Role="MovieSchedule" Type="SA38_MovieTicketingDBModel.MovieSchedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Movie">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MovieSchedule">
+        <PropertyRef Name="MovieId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MovieSchedule_Theatre">
+    <End Role="Theatre" Type="SA38_MovieTicketingDBModel.Theatre" Multiplicity="0..1" />
+    <End Role="MovieSchedule" Type="SA38_MovieTicketingDBModel.MovieSchedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Theatre">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MovieSchedule">
+        <PropertyRef Name="TheatreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MovieSchedule_Timing">
+    <End Role="Timing" Type="SA38_MovieTicketingDBModel.Timing" Multiplicity="0..1" />
+    <End Role="MovieSchedule" Type="SA38_MovieTicketingDBModel.MovieSchedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Timing">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MovieSchedule">
+        <PropertyRef Name="TimingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Promotion_MovieSchedule">
+    <End Role="MovieSchedule" Type="SA38_MovieTicketingDBModel.MovieSchedule" Multiplicity="0..1" />
+    <End Role="Promotion" Type="SA38_MovieTicketingDBModel.Promotion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MovieSchedule">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Promotion">
+        <PropertyRef Name="ScheduleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SeatAvailability_MovieSchedule">
+    <End Role="MovieSchedule" Type="SA38_MovieTicketingDBModel.MovieSchedule" Multiplicity="0..1" />
+    <End Role="SeatAvailability" Type="SA38_MovieTicketingDBModel.SeatAvailability" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MovieSchedule">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SeatAvailability">
+        <PropertyRef Name="ScheduleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Promotion_Restaurant">
+    <End Role="Restaurant" Type="SA38_MovieTicketingDBModel.Restaurant" Multiplicity="0..1" />
+    <End Role="Promotion" Type="SA38_MovieTicketingDBModel.Promotion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Restaurant">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Promotion">
+        <PropertyRef Name="RestaurantId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

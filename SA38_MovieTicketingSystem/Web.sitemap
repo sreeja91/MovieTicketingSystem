@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+    <siteMapNode url="" title="Master"  description="">
+      <!--<siteMapNode roles="*" title="Test1">-->
+        <siteMapNode url="MTS_UI/HomeUI.aspx" title="Home"  description="" roles="*" />
+        <siteMapNode url="MTS_UI/MoviesUI.aspx" title="Movies"  description="" roles="*" />
+        <siteMapNode url="MTS_UI/MemberUI.aspx" title="Member"  description="" roles="*" />
+        <siteMapNode url="MTS_UI/Promotions.aspx" title="Promotions"  description="" roles="*" />
+      <!--</siteMapNode>
+      <siteMapNode roles="*">-->
+        <siteMapNode url="MTS_UI/MaintenanceUI.aspx" title="Maintainance"  description="" roles="admin, staff">
+            <siteMapNode url="MTS_UI/New Movie.aspx" title="Movies"  description="" roles="admin, staff" />
+            <siteMapNode url="MTS_UI/NewSchedule.aspx" title="NewSchedule"  description="" roles="admin, staff" /> 
+            <siteMapNode url="MTS_UI/TheatreDetails.aspx" title="Theatre"  description="" roles="admin, staff" />
+            <siteMapNode url="MTS_UI/RestaurantMaintenance.aspx" title="Restaurant"  description="" roles="admin, staff" />
+        </siteMapNode>
+        <siteMapNode url="~/MTS_UI/IssueTickets.aspx" title="Issue Ticket"  description="" roles="admin, staff" />
+        <!--<siteMapNode url="" title="Reports"  description="" roles="admin" />-->
+        <!--<siteMapNode url="" title="Contact Us"  description="" roles="*" />-->
+      <!--</siteMapNode>-->
+    </siteMapNode>
+</siteMap>
